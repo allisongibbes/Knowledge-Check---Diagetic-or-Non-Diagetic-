@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Check: Diegetic vs. Non-Diegetic</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --accent-hover: #2980b9;
+            --success-color: #2ecc71;
+            --error-color: #e74c3c;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff;
+            color: var(--primary-color);
+            line-height: 1.6;
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 30px;
+            background-color: var(--bg-color);
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .quiz-header h3 {
+            margin-top: 0;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .quiz-header p {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+
+        .question-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--accent-color);
+            transition: transform 0.2s ease;
+        }
+
+        .question-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .scenario-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .scenario-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .option-btn {
+            background-color: #fff;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background-color: var(--accent-color);
+            color: #fff;
+        }
+
+        .option-btn:disabled {
+            cursor: default;
+            opacity: 0.7;
+        }
+
+        /* Feedback States */
+        .option-btn.correct {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+            color: white;
+        }
+
+        .option-btn.incorrect {
+            background-color: var(--error-color);
+            border-color: var(--error-color);
+            color: white;
+        }
+
+        .feedback-text {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .feedback-text.correct-feedback {
+            background-color: #e8f8f5;
+            border-left: 4px solid var(--success-color);
+            color: #1e8449;
+        }
+
+        .feedback-text.incorrect-feedback {
+            background-color: #fdedec;
+            border-left: 4px solid var(--error-color);
+            color: #c0392b;
+        }
+
+        .completion-message {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--success-color);
+            margin-top: 30px;
+            padding: 20px;
+            background: #e8f8f5;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div class="quiz-header">
+        <h3>Knowledge Check: The Soundscape</h3>
+        <p>Test your ear! Read each scenario below and determine the type of sound being used.</p>
+    </div>
+
+    <!-- Question 1 -->
+    <div class="question-card" id="q1">
+        <div class="scenario-label">Scenario A</div>
+        <div class="scenario-text">"A character puts on headphones, presses play, and blasts heavy metal music as they walk down the street."</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer('q1', this, true)">Diegetic Sound</button>
+            <button class="option-btn" onclick="checkAnswer('q1', this, false)">Non-Diegetic Sound</button>
+            <button class="option-btn" onclick="checkAnswer('q1', this, false)">Point of Audition</button>
+        </div>
+        <div class="feedback-text" id="feedback-q1">
+            <strong>Correct!</strong> This is Diegetic sound because the source of the music (the headphones) exists physically within the world of the story. The character can hear it just like we can.
+        </div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="question-card" id="q2">
+        <div class="scenario-label">Scenario B</div>
+        <div class="scenario-text">"A slow, mournful violin plays as the camera pans across a deserted, snow-covered battlefield."</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer('q2', this, false)">Diegetic Sound</button>
+            <button class="option-btn" onclick="checkAnswer('q2', this, true)">Non-Diegetic Sound</button>
+            <button class="option-btn" onclick="checkAnswer('q2', this, false)">Foley Artistry</button>
+        </div>
+        <div class="feedback-text" id="feedback-q2">
+            <strong>Correct!</strong> This is Non-Diegetic sound. There is no orchestra sitting in the middle of the battlefield; the music is added outside the story world purely to evoke an emotional response from the audience.
+        </div>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="question-card" id="q3">
+        <div class="scenario-label">Scenario C</div>
+        <div class="scenario-text">"We hear a loud, muffled heartbeat pounding rapidly while a terrified character hides in a closet from an intruder."</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer('q3', this, false)">Non-Diegetic Sound</button>
+            <button class="option-btn" onclick="checkAnswer('q3', this, false)">Room Tone</button>
+            <button class="option-btn" onclick="checkAnswer('q3', this, true)">Point of Audition</button>
+        </div>
+        <div class="feedback-text" id="feedback-q3">
+            <strong>Correct!</strong> This is Point of Audition (also known as Internal Diegetic). The sound design has been modified to put us directly inside the subjective physical and psychological perspective of the character.
+        </div>
+    </div>
+
+    <div class="completion-message" id="completion-msg">
+        🎉 Great listening! You've mastered the terminology of the soundscape.
+    </div>
+</div>
+
+<script>
+    let answeredQuestions = 0;
+    const totalQuestions = 3;
+
+    function checkAnswer(questionId, buttonClicked, isCorrect) {
+        const questionCard = document.getElementById(questionId);
+        const buttons = questionCard.querySelectorAll('.option-btn');
+        const feedbackDiv = document.getElementById(`feedback-${questionId}`);
+
+        // Disable all buttons in this question once an answer is chosen
+        buttons.forEach(btn => btn.disabled = true);
+
+        if (isCorrect) {
+            // Style clicked button as correct
+            buttonClicked.classList.add('correct');
+            
+            // Show positive feedback
+            feedbackDiv.classList.add('correct-feedback');
+            feedbackDiv.style.display = 'block';
+            
+            // Track progress
+            answeredQuestions++;
+            if (answeredQuestions === totalQuestions) {
+                document.getElementById('completion-msg').style.display = 'block';
+            }
+        } else {
+            // Style clicked button as incorrect
+            buttonClicked.classList.add('incorrect');
+            
+            // Find and highlight the actual correct button
+            buttons.forEach(btn => {
+                // We check the onclick attribute string to find the one that passes 'true'
+                if (btn.getAttribute('onclick').includes('true')) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            // Show negative/corrective feedback
+            feedbackDiv.classList.add('incorrect-feedback');
+            feedbackDiv.innerHTML = "<strong>Not quite.</strong> Take a look at the correct answer highlighted in green. Read the explanation to see why!";
+            feedbackDiv.style.display = 'block';
+            
+            // Track progress (we still count it as answered so they can finish the module)
+            answeredQuestions++;
+            if (answeredQuestions === totalQuestions) {
+                document.getElementById('completion-msg').style.display = 'block';
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
